@@ -1,0 +1,33 @@
+name: Go
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:steps:    
+  # Reference a specific commit
+  - uses: actions/setup-nodejs
+  # Reference the major version of a release
+  - uses: actions/setup-node@v1
+  # Reference a minor version of a release
+  - uses: actions/setup-node@v1.2
+  # Reference a branch
+  - uses: actions/setup-node@main
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15
+
+    - name: Build
+      run: go build -v ./nodejs-lts...
+
+    - name: Test
+      run: go test -v ./nodejs-lts...
